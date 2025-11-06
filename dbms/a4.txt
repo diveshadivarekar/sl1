@@ -1,0 +1,39 @@
+DELIMITER //
+
+CREATE PROCEDURE return_book(IN rno INT, IN bname VARCHAR(50))
+BEGIN
+  DECLARE idate DATE;
+  DECLARE days INT;
+  DECLARE fine INT DEFAULT 0;
+  DECLARE not_found CONDITION FOR SQLSTATE '02000';
+
+  -- handle case: no such book issued
+  DECLARE EXIT HANDLER FOR not_found
+    SELECT '❌ No such book issued to this Roll_no!' AS Message;
+
+  -- get issue date
+  SELECT Date_of_Issue INTO idate
+  FROM Borrower
+  WHERE Roll_no = rno AND Name_of_Book = bname AND Status = 'I';
+
+  -- calculate days and fine
+  SET days = DATEDIFF(CURDATE(), idate);
+  IF days > 15 AND days <= 30 THEN 
+      SET fine = (days - 15) * 5;
+  ELSEIF days > 30 THEN 
+      SET fine = (15 * 5) + ((days - 30) * 50);
+  END IF;
+
+  -- update status and insert fine if any
+  UPDATE Borrower 
+  SET Status = 'R' 
+  WHERE Roll_no = rno AND Name_of_Book = bname;
+
+  IF fine > 0 THEN 
+      INSERT INTO Fine VALUES (rno, CURDATE(), fine);
+  END IF;
+
+  SELECT CONCAT('✅ Book returned. Fine = Rs ', fine) AS Message;
+END//
+
+DELIMITER ;
