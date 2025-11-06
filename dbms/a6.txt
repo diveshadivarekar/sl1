@@ -1,0 +1,31 @@
+DELIMITER //
+
+CREATE PROCEDURE merge_rollcall()
+BEGIN
+  DECLARE done INT DEFAULT 0;
+  DECLARE v_roll INT;
+  DECLARE v_name VARCHAR(50);
+
+  -- Cursor to loop through all new roll numbers
+  DECLARE cur CURSOR FOR SELECT Roll_No, Name FROM N_Roll_Call;
+
+  -- Handler for cursor end
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+  OPEN cur;
+  read_loop: LOOP
+    FETCH cur INTO v_roll, v_name;
+    IF done = 1 THEN 
+      LEAVE read_loop;
+    END IF;
+
+    -- Only insert if not already present
+    IF NOT EXISTS (SELECT 1 FROM O_Roll_Call WHERE Roll_No = v_roll) THEN
+      INSERT INTO O_Roll_Call VALUES (v_roll, v_name);
+    END IF;
+
+  END LOOP;
+  CLOSE cur;
+END//
+
+DELIMITER ;
