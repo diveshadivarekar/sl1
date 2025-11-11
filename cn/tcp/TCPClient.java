@@ -1,4 +1,4 @@
-// TCPClient.java
+package cn.tcp;
 import java.io.*;
 import java.net.*;
 
