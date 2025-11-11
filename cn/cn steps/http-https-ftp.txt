@@ -1,0 +1,19 @@
+HTTP | HTTPS
+
+Step 1: Get 2 PC, 1 Switch , 1 Server
+Step 2: Setup Iprs for all network devices
+Step 3: Go to Server>Services> HTTP - ON & HTTPS - ON & FTTP - READ + WRITE 
+Step 4: Go to Server>Services>HTTP>index.html - edit website if told
+Step 5: Go to PC1>Desktop>Web Browser , hit server ip - http://{SERVER-IP}
+
+FTP
+
+Step 0: setup your username & password for FTP
+Step 1: Go to PC1 > Desktop > Text Editor > Make temp.txt > Save
+Step 2: - Go to PC1 > Desktop > CMD 
+1) ftp SERVER_IP
+2) put temp.txt
+
+Step 3: Go to PC2 > Desktop > CMD 
+1) ftp SERVER_IP
+2) get temp.txt

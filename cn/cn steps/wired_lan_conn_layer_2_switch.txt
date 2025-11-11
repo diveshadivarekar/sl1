@@ -1,0 +1,7 @@
+Step 1: Get Switch PT, PC_1 , PC_2
+Step 2: Get all Wired Connections
+Assign IPs
+A) Click on PC1 > Config > FastEthernet0 > 10.0.0.1
+B) Click on PC2> Config > FastEthernet0 > 10.0.0.2
+Step 3: PC2>Desktop>CMD> "ping 10.0.0.1"
+Step 4: Simulation > command

@@ -1,0 +1,29 @@
+STEP 1: go to amazon.com {ecomm/bank website}..
+STEP 2: ADD Filter "tls" (For SSL/TLS traffic)
+STEP 3: Search/Manually Look for "Client Hello" & "Server Hello"
+
+For HTTPS specifically
+tcp.port == 443
+
+
+Theory:
+
+SSL Protocol 
+• SSL (Secure Socket Layer) is a cryptographic protocol that provides secure communication 
+over the internet. 
+• It ensures confidentiality, integrity, and authentication by encrypting data exchanged between 
+the client and the server. 
+• Modern websites use TLS (Transport Layer Security), which is the successor of SSL, but the 
+term SSL is still commonly used. 
+• SSL works over TCP and is widely used in HTTPS (Port 443). 
+
+Key Features of SSL/TLS: 
+1. Handshake Process – Client and server agree on encryption methods and exchange keys. 
+2. Encryption – Data is encrypted before transmission to prevent eavesdropping. 
+3. Authentication – The server presents a digital certificate to prove its identity. 
+4. Integrity – Data integrity is ensured using hashing techniques. 
+
+Why SSL is important: 
+• Protects sensitive information like passwords, credit card numbers, and personal details. 
+• Prevents attacks such as man-in-the-middle (MITM) and eavesdropping. 
+• Builds user trust in online banking, e-commerce, and other secure applications. 

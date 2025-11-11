@@ -1,0 +1,31 @@
+STEP 1: Connect to a VPN (US Preferably)
+STEP 2: Connect Wireshark to WIFI/Ethernet (Not VPN)
+STEP 3: Go to amazon.com 
+STEP 4: Apply filter "esp"
+STEP 5: Don't try "ah" as issue due to VPN (not supported)
+
+
+Theory: 
+1. IPsec (Internet Protocol Security): 
+• A suite of protocols used to secure IP communication. 
+• Operates at the Network Layer of the OSI model. 
+• Provides: 
+o Authentication (verifies sender identity). 
+o Confidentiality (encrypts data). 
+o Integrity (ensures data is not tampered). 
+o Anti-replay protection (prevents duplicate packets). 
+IPsec works in two modes: 
+• Transport Mode → Only the payload of the IP packet is protected. 
+• Tunnel Mode → The entire IP packet is protected and encapsulated inside a new IP packet. 
+
+2. IPsec Protocols: 
+(a) Authentication Header (AH): 
+• Provides data integrity and authentication of IP packets. 
+• Protects the entire packet (header + payload) except fields that change in transit (like 
+TTL). 
+• Does not provide encryption (no confidentiality). 
+• Protocol number: 51.
+(b) Encapsulating Security Payload (ESP): 
+• Provides encryption (confidentiality), authentication, and integrity. 
+• Protects only the payload, not the outer IP header. 
+• Protocol number: 50. 

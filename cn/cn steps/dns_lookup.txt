@@ -1,0 +1,88 @@
+python code for DNS:
+
+import socket 
+ 
+def forward_lookup(domain): 
+    try: 
+        ip = socket.gethostbyname(domain) 
+        print(f"IP Address of {domain}: {ip}") 
+    except socket.gaierror: 
+        print("Host not found.") 
+ 
+def reverse_lookup(ip_address): 
+    try: 
+        host = socket.gethostbyaddr(ip_address) 
+        print(f"Host Name of {ip_address}: {host[0]}") 
+    except socket.herror: 
+        print("Host not found.")
+
+def main(): 
+    print("DNS Lookup Program") 
+    print("1. Forward Lookup (Domain → IP)") 
+    print("2. Reverse Lookup (IP → Domain)") 
+ 
+    choice = input("Enter your choice (1/2): ") 
+ 
+    if choice == '1': 
+        domain = input("Enter Domain Name: ") 
+        forward_lookup(domain) 
+    elif choice == '2': 
+        ip_address = input("Enter IP Address: ") 
+        reverse_lookup(ip_address) 
+    else: 
+        print("Invalid choice. Exiting.") 
+ 
+if __name__ == "__main__": 
+    main() 
+
+
+Theory: 
+
+What is DNS? 
+The Domain Name System (DNS) is one of the most critical parts of the Internet. It works like a 
+telephone directory that translates human-readable domain names (e.g., www.google.com) into IP 
+addresses (e.g., 142.250.190.36) that computers and networking devices use to identify each other. 
+Without DNS, users would need to remember long numeric IP addresses for every website, which 
+is impractical. 
+DNS Working Process 
+When you type a web address into a browser, the following steps occur: 
+1. Browser Cache Check – The browser first checks if it already knows the IP address from a 
+recent visit. 
+2. Operating System Cache Check – If not found, the OS checks its local DNS cache. 
+3. DNS Resolver (ISP’s DNS Server) – If not cached locally, the request is sent to the DNS 
+resolver of your Internet Service Provider (ISP). 
+4. Recursive Query to DNS Hierarchy: 
+o Root DNS Servers → Provide the address of the Top-Level Domain (TLD) server 
+(e.g., .com). 
+o TLD DNS Servers → Provide the address of the authoritative server for the domain. 
+o Authoritative DNS Server → Provides the final IP address of the requested domain. 
+5. The IP address is returned to the client, and the browser uses it to establish a connection (e.g., 
+via TCP/IP) with the website’s server. 
+
+Types of DNS Queries 
+1. Forward Lookup (Name to IP): 
+Class: T.E.                                      
+Roll No: 3078 
+o The most common query where the domain name is given, and the DNS returns the 
+corresponding IP address. 
+o Example: www.google.com → 142.250.190.36 
+2. Reverse Lookup (IP to Name): 
+o A query where the IP address is given, and the DNS returns the corresponding 
+domain name (if available). 
+o Uses PTR records (Pointer records). 
+o Example: 142.250.190.36 → maa05s47-in-f36.1e100.net 
+DNS Records 
+DNS servers store information in the form of resource records: 
+• A Record (Address Record): Maps a domain name to an IPv4 address. 
+• AAAA Record: Maps a domain name to an IPv6 address. 
+• CNAME Record (Canonical Name): Maps one domain name to another (alias). 
+• MX Record (Mail Exchange): Specifies the mail server responsible for a domain. 
+• PTR Record (Pointer Record): Used for reverse lookup (IP → Domain). 
+• NS Record (Name Server): Identifies the authoritative name servers for a domain. 
+DNS Lookup in Programming 
+• Forward DNS Lookup: Uses functions like gethostbyname() (in Python/Java) to resolve a 
+domain name into its IP address. 
+• Reverse DNS Lookup: Uses functions like gethostbyaddr() to resolve an IP address back 
+into a hostname. 
+• These system calls internally communicate with the OS resolver, which queries DNS servers 
+if needed. 

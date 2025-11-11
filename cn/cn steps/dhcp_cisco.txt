@@ -1,0 +1,22 @@
+Step 1: Get Switch PT, PC_1 , PC_2, Server
+Step 2: Get all Wired Connections
+STEP 3: Go to Server>Services>DHCP >Service (ON) 
+STEP 4: Start IP add: 169:254:0:0 subnet : 255:255:0:0 Click on Add
+STEP 5: Go to PC_1 , PC_2 , Server > Config > IP Configuration > Set to DHCP (it will auto take ip)
+STEP 6: Go to PC_1 > Desktop > CMD
+A) ping {ip of PC_2}
+B) ipconfig
+check if IPv4 Address is Autoconfigured...
+
+
+Theory: 
+1. DHCP (Dynamic Host Configuration Protocol): 
+• DHCP is a network management protocol used to dynamically assign IP addresses and 
+other network settings (like DNS, gateway, subnet mask) to client machines. 
+• Operates at the Application Layer. 
+• Uses UDP port 67 (server) and UDP port 68 (client). 
+2. DHCP Working Steps (DORA Process): 
+1. Discover → Client broadcasts a DHCP Discover message to find servers. 
+2. Offer → DHCP server responds with an Offer (IP + configuration). 
+3. Request → Client requests the offered IP address. 
+4. Acknowledge → Server acknowledges and assigns the IP address to the client. 

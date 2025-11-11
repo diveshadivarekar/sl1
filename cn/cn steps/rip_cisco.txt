@@ -1,0 +1,102 @@
+Setup 
+
+PC1 — Switch — R1 — R2 — Switch — PC2
+
+Device	Interface	IP Address	Subnet Mask	Description
+PC1	NIC	192.168.10.2	255.255.255.0	Connected to R1 LAN
+R1	Fa0/0	192.168.10.1	255.255.255.0	LAN (to PC1)
+R1	Fa0/1	10.0.0.1	255.255.255.252	Link to R2
+R2	Fa0/0	192.168.20.1	255.255.255.0	LAN (to PC2)
+R2	Fa0/1	10.0.0.2	255.255.255.252	Link to R1
+PC2	NIC	192.168.20.2	255.255.255.0	Connected to R2 LAN
+
+
+Step 1: Get 2 routers, 2 switches & 2 routers
+Step 2: Connect devices:
+PC1 ↔ Switch1 ↔ R1 (Fa0/0)
+R1 (Fa0/1) ↔ R2 (Fa0/1)
+R2 (Fa0/0) ↔ Switch2 ↔ PC2
+(Use copper straight-through cables for PCs/switches and crossover for router-to-router if required.)
+
+Step 3: Router (R1)
+
+enable
+conf t
+hostname R1
+interface fa0/0
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+exit
+interface fa0/1
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+exit
+
+Step 4: Router (R2)
+enable
+conf t
+hostname R2
+interface fa0/0
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+exit
+interface fa0/1
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+exit
+
+
+Step 5: RIP Router R1
+
+router rip
+version 2
+no auto-summary
+network 192.168.10.0
+network 10.0.0.0
+exit
+
+(useless code just use RIP GUI to add both network)
+
+Step 6: RIP Router R2
+
+router rip
+version 2
+no auto-summary
+network 192.168.20.0
+network 10.0.0.0
+exit
+
+(useless code just use RIP GUI to add both network)
+
+Step 7: IMPPP - Configure PCs
+PC 1 - Default Gateway: 192.168.10.1
+PC 2 - Default Gateway: 192.168.20.1
+
+Step 8: Verify Config
+
+Go to router CLI
+
+"show ip route"
+
+Step 9: Go to PC1>Desktop>CMD
+Write ping "IP_PC2"
+
+Simulate & bingo!!!!
+
+
+Theory:
+
+The Routing Information Protocol (RIP) is one of the oldest distance-vector routing 
+protocols which employ the hop count as a routing metric. RIP prevents routing loops by 
+implementing a limit on the number of hops allowed in a path from source to destination. The 
+maximum number of hops allowed for RIP is 15, which limits the size of networks that RIP 
+can support. A hop count of 16 is considered an infinite distance and the route is considered 
+unreachable. RIP implements the split horizon, route poisoning and hold down mechanisms to 
+prevent incorrect routing information from being propagated. 
+Originally, each RIP router transmitted full updates every 30 seconds. In the early 
+deployments, routing tables were small enough that the traffic was not significant.  As networks 
+grew in size, however, it became evident there could be a massive traffic burst every 30 
+seconds, even if the routers had been initialized at random times. It was thought, as a result of 
+random initialization, the routing updates would spread out in time, but this was not true in 
+practice. Sally Floyd and Van Jacobson showed in 1994 that, without slight randomization of 
+the update timer, the timers synchronized over time. 
